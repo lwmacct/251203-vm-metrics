@@ -8,6 +8,7 @@ package version
 import (
 	"fmt"
 	"path"
+	"regexp"
 	"runtime"
 	"runtime/debug"
 	"strings"
@@ -25,6 +26,9 @@ var (
 	Developer  string = "Unknown" // 开发者/维护者
 	Workspace  string = "Unknown" // 构建时工作目录，用于去除堆栈中的绝对路径
 )
+
+// datePrefix 用于匹配项目名称前缀中的日期格式（如 "251203-"）
+var datePrefix = regexp.MustCompile(`^[0-9-]{7}`)
 
 func init() {
 	initFromBuildInfo()
@@ -71,6 +75,11 @@ func initFromBuildInfo() {
 			}
 		}
 	}
+
+	// 从 AppProject 中提取 AppRawName（去除日期前缀）
+	if AppRawName == "Unknown" && AppProject != "Unknown" {
+		AppRawName = datePrefix.ReplaceAllString(AppProject, "")
+	}
 }
 
 // formatBuildTime 将 VCS 时间（RFC3339 格式）转换为 UTC+8 时区格式。
@@ -106,6 +115,11 @@ func GetVersion() string {
 // GetShortVersion 返回简短版本号 (兼容性函数)
 func GetShortVersion() string {
 	return AppVersion
+}
+
+// GetAppRawName 返回应用原始名称
+func GetAppRawName() string {
+	return AppRawName
 }
 
 // GetBuildInfo 返回构建相关信息 (用于健康检查等)

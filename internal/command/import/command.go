@@ -13,6 +13,7 @@ var Command = &cli.Command{
 	Name:      "mc-vmimport",
 	Usage:     "VictoriaMetrics 数据导入工具",
 	ArgsUsage: "[file]",
+	Before:    command.BeforeLoadConfig,
 	Action:    actionImportJSON,
 	Commands: []*cli.Command{
 		version.Command,

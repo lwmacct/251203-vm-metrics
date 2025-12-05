@@ -8,7 +8,6 @@ import (
 	"os"
 
 	"github.com/lwmacct/251203-mc-metrics/internal/command"
-	"github.com/lwmacct/251203-mc-metrics/internal/config"
 	"github.com/lwmacct/251203-mc-metrics/internal/vmapi"
 	"github.com/urfave/cli/v3"
 )
@@ -67,12 +66,7 @@ func actionExportJSON(ctx context.Context, cmd *cli.Command) error {
 		return cli.ShowAppHelp(cmd)
 	}
 
-	cfg, err := config.Load(cmd, cmd.String("config"))
-	if err != nil {
-		return err
-	}
-
-	client, err := command.NewClient(cfg)
+	client, err := command.NewClient(command.GetConfig(cmd))
 	if err != nil {
 		return fmt.Errorf("failed to create client: %w", err)
 	}
@@ -102,12 +96,7 @@ func actionExportCSV(ctx context.Context, cmd *cli.Command) error {
 		return cli.ShowAppHelp(cmd)
 	}
 
-	cfg, err := config.Load(cmd, cmd.String("config"))
-	if err != nil {
-		return err
-	}
-
-	client, err := command.NewClient(cfg)
+	client, err := command.NewClient(command.GetConfig(cmd))
 	if err != nil {
 		return fmt.Errorf("failed to create client: %w", err)
 	}
@@ -137,12 +126,7 @@ func actionExportNative(ctx context.Context, cmd *cli.Command) error {
 		return cli.ShowAppHelp(cmd)
 	}
 
-	cfg, err := config.Load(cmd, cmd.String("config"))
-	if err != nil {
-		return err
-	}
-
-	client, err := command.NewClient(cfg)
+	client, err := command.NewClient(command.GetConfig(cmd))
 	if err != nil {
 		return fmt.Errorf("failed to create client: %w", err)
 	}

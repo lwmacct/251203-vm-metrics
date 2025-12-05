@@ -13,16 +13,12 @@ import (
 
 // actionQuery 执行查询
 func actionQuery(ctx context.Context, cmd *cli.Command) error {
-	cfg, err := config.Load(cmd, cmd.String("config"))
-	if err != nil {
-		return err
-	}
-
 	query := cmd.Args().First()
 	if query == "" {
 		return cli.ShowAppHelp(cmd)
 	}
 
+	cfg := command.GetConfig(cmd)
 	client, err := command.NewClient(cfg)
 	if err != nil {
 		return fmt.Errorf("failed to create client: %w", err)
@@ -68,11 +64,7 @@ func actionQuery(ctx context.Context, cmd *cli.Command) error {
 
 // actionMetrics 列出所有指标名称
 func actionMetrics(ctx context.Context, cmd *cli.Command) error {
-	cfg, err := config.Load(cmd, cmd.String("config"))
-	if err != nil {
-		return err
-	}
-
+	cfg := command.GetConfig(cmd)
 	client, err := command.NewClient(cfg)
 	if err != nil {
 		return fmt.Errorf("failed to create client: %w", err)
@@ -93,11 +85,7 @@ func actionMetrics(ctx context.Context, cmd *cli.Command) error {
 
 // actionLabels 列出所有标签名称
 func actionLabels(ctx context.Context, cmd *cli.Command) error {
-	cfg, err := config.Load(cmd, cmd.String("config"))
-	if err != nil {
-		return err
-	}
-
+	cfg := command.GetConfig(cmd)
 	client, err := command.NewClient(cfg)
 	if err != nil {
 		return fmt.Errorf("failed to create client: %w", err)
@@ -122,11 +110,7 @@ func actionLabelValues(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("label name is required")
 	}
 
-	cfg, err := config.Load(cmd, cmd.String("config"))
-	if err != nil {
-		return err
-	}
-
+	cfg := command.GetConfig(cmd)
 	client, err := command.NewClient(cfg)
 	if err != nil {
 		return fmt.Errorf("failed to create client: %w", err)
@@ -151,11 +135,7 @@ func actionSeries(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("match selector is required")
 	}
 
-	cfg, err := config.Load(cmd, cmd.String("config"))
-	if err != nil {
-		return err
-	}
-
+	cfg := command.GetConfig(cmd)
 	client, err := command.NewClient(cfg)
 	if err != nil {
 		return fmt.Errorf("failed to create client: %w", err)

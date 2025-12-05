@@ -2,16 +2,47 @@
 package command
 
 import (
+	"context"
 	"fmt"
 	"time"
 
 	"github.com/lwmacct/251203-mc-metrics/internal/config"
+	"github.com/lwmacct/251203-mc-metrics/internal/version"
 	"github.com/lwmacct/251203-mc-metrics/internal/vmapi"
 	"github.com/urfave/cli/v3"
 )
 
 // Defaults 默认配置 - 单一来源 (Single Source of Truth)
 var Defaults = config.DefaultConfig()
+
+// MetaKeyConfig 配置在 Metadata 中的 key
+const MetaKeyConfig = "config"
+
+// BeforeLoadConfig 在 Action 执行前加载配置
+// 将配置存入 cmd.Metadata 供后续 Action 使用
+func BeforeLoadConfig(ctx context.Context, cmd *cli.Command) (context.Context, error) {
+	cfg, err := config.Load(cmd, cmd.String("config"), version.GetAppRawName())
+	if err != nil {
+		return ctx, err
+	}
+
+	if cmd.Metadata == nil {
+		cmd.Metadata = make(map[string]any)
+	}
+	cmd.Metadata[MetaKeyConfig] = cfg
+	return ctx, nil
+}
+
+// GetConfig 从 cmd.Metadata 获取已加载的配置
+func GetConfig(cmd *cli.Command) *config.Config {
+	if cmd.Metadata == nil {
+		return nil
+	}
+	if cfg, ok := cmd.Metadata[MetaKeyConfig].(*config.Config); ok {
+		return cfg
+	}
+	return nil
+}
 
 // BaseFlags 返回所有命令共享的基础 flags
 // 包括：配置文件、服务器、认证、TLS 配置

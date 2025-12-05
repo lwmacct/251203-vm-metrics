@@ -8,7 +8,6 @@ import (
 	"os"
 
 	"github.com/lwmacct/251203-mc-metrics/internal/command"
-	"github.com/lwmacct/251203-mc-metrics/internal/config"
 	"github.com/lwmacct/251203-mc-metrics/internal/vmapi"
 	"github.com/urfave/cli/v3"
 )
@@ -50,12 +49,7 @@ func getReader(cmd *cli.Command) (io.ReadCloser, error) {
 
 // actionImportJSON 导入 JSON Line 格式
 func actionImportJSON(ctx context.Context, cmd *cli.Command) error {
-	cfg, err := config.Load(cmd, cmd.String("config"))
-	if err != nil {
-		return err
-	}
-
-	client, err := command.NewClient(cfg)
+	client, err := command.NewClient(command.GetConfig(cmd))
 	if err != nil {
 		return fmt.Errorf("failed to create client: %w", err)
 	}
@@ -76,12 +70,7 @@ func actionImportJSON(ctx context.Context, cmd *cli.Command) error {
 
 // actionImportCSV 导入 CSV 格式
 func actionImportCSV(ctx context.Context, cmd *cli.Command) error {
-	cfg, err := config.Load(cmd, cmd.String("config"))
-	if err != nil {
-		return err
-	}
-
-	client, err := command.NewClient(cfg)
+	client, err := command.NewClient(command.GetConfig(cmd))
 	if err != nil {
 		return fmt.Errorf("failed to create client: %w", err)
 	}
@@ -102,12 +91,7 @@ func actionImportCSV(ctx context.Context, cmd *cli.Command) error {
 
 // actionImportNative 导入 Native 二进制格式
 func actionImportNative(ctx context.Context, cmd *cli.Command) error {
-	cfg, err := config.Load(cmd, cmd.String("config"))
-	if err != nil {
-		return err
-	}
-
-	client, err := command.NewClient(cfg)
+	client, err := command.NewClient(command.GetConfig(cmd))
 	if err != nil {
 		return fmt.Errorf("failed to create client: %w", err)
 	}
@@ -128,12 +112,7 @@ func actionImportNative(ctx context.Context, cmd *cli.Command) error {
 
 // actionImportPrometheus 导入 Prometheus exposition 格式
 func actionImportPrometheus(ctx context.Context, cmd *cli.Command) error {
-	cfg, err := config.Load(cmd, cmd.String("config"))
-	if err != nil {
-		return err
-	}
-
-	client, err := command.NewClient(cfg)
+	client, err := command.NewClient(command.GetConfig(cmd))
 	if err != nil {
 		return fmt.Errorf("failed to create client: %w", err)
 	}

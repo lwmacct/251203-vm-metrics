@@ -12,6 +12,7 @@ var Command = &cli.Command{
 	Name:      "mc-vmexport",
 	Usage:     "VictoriaMetrics 数据导出工具",
 	ArgsUsage: "<match>",
+	Before:    command.BeforeLoadConfig,
 	Action:    actionExportJSON,
 	Commands: []*cli.Command{
 		version.Command,

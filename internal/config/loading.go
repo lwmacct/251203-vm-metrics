@@ -18,11 +18,8 @@ import (
 	"github.com/urfave/cli/v3"
 )
 
-// 环境变量前缀
-const EnvPrefix = "MC_VMQUERY_"
-
 // 默认配置文件搜索路径
-func defaultConfigPaths() []string {
+func defaultConfigPaths(appRawName string) []string {
 	paths := []string{
 		"config.yaml",
 		"config/config.yaml",
@@ -30,21 +27,26 @@ func defaultConfigPaths() []string {
 
 	// 添加用户主目录
 	if home, err := os.UserHomeDir(); err == nil {
-		paths = append(paths, filepath.Join(home, ".mc-vmquery.yaml"))
+		paths = append(paths, filepath.Join(home, "."+appRawName+".yaml"))
 	}
 
 	// 添加系统配置目录
-	paths = append(paths, "/etc/mc-vmquery/config.yaml")
-
+	paths = append(paths, "/etc/"+appRawName+"/config.yaml")
 	return paths
 }
 
 // Load 加载配置，按优先级合并：
 // 1. 默认值 (最低优先级)
 // 2. 配置文件 (通过 configPath 指定，或搜索默认路径)
-// 3. 环境变量 (MC_VMQUERY_* 前缀)
+// 3. 环境变量前缀
 // 4. CLI flags (最高优先级)
-func Load(cmd *cli.Command, configPath string) (*Config, error) {
+func Load(cmd *cli.Command, configPath, AppRawName string) (*Config, error) {
+	if AppRawName == "" || AppRawName == "Unknown" {
+		AppRawName = "app"
+	}
+
+	EnvPrefix := strings.ReplaceAll(strings.ToUpper(AppRawName), "-", "_")
+
 	k := koanf.New(".")
 
 	// 1️⃣ 加载默认配置 (最低优先级)
@@ -64,7 +66,7 @@ func Load(cmd *cli.Command, configPath string) (*Config, error) {
 		configLoaded = true
 	} else {
 		// 搜索默认配置文件路径
-		for _, path := range defaultConfigPaths() {
+		for _, path := range defaultConfigPaths(AppRawName) {
 			if err := k.Load(file.Provider(path), yaml.Parser()); err == nil {
 				slog.Info("Loaded config from file", "path", path)
 				configLoaded = true
@@ -77,11 +79,10 @@ func Load(cmd *cli.Command, configPath string) (*Config, error) {
 		slog.Debug("No config file found, using defaults and env vars")
 	}
 
-	// 3️⃣ 加载环境变量 (MC_VMQUERY_SERVER_URL → server.url)
+	// 3️⃣ 加载环境变量
 	if err := k.Load(env.Provider(".", env.Opt{
 		Prefix: EnvPrefix,
 		TransformFunc: func(key, value string) (string, any) {
-			// MC_VMQUERY_SERVER_URL → server.url
 			key = strings.ToLower(strings.TrimPrefix(key, EnvPrefix))
 			key = strings.ReplaceAll(key, "_", ".")
 			return key, value

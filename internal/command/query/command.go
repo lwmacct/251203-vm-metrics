@@ -14,6 +14,7 @@ var Command = &cli.Command{
 	Name:      "mc-vmquery",
 	Usage:     "VictoriaMetrics MetricsQL 查询客户端",
 	ArgsUsage: "[query]",
+	Before:    command.BeforeLoadConfig,
 	Action:    actionQuery,
 	Commands: []*cli.Command{
 		version.Command,
