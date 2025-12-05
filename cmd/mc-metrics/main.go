@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/lwmacct/251203-mc-metrics/internal/command"
+	"github.com/lwmacct/251203-mc-metrics/internal/command/completion"
 	"github.com/lwmacct/251203-mc-metrics/internal/command/export"
 	importcmd "github.com/lwmacct/251203-mc-metrics/internal/command/import"
 	"github.com/lwmacct/251203-mc-metrics/internal/command/query"
@@ -23,6 +24,7 @@ func main() {
 			exportCommand(),
 			importCommand(),
 			version.Command,
+			completion.Command,
 		},
 		Flags: command.BaseFlags(),
 	}
