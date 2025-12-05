@@ -42,9 +42,16 @@ func initFromBuildInfo() {
 		return
 	}
 
-	// 从模块路径提取项目名称
-	if AppProject == "Unknown" && info.Main.Path != "" {
-		AppProject = path.Base(info.Main.Path)
+	// 从模块路径提取项目名称和开发者
+	if info.Main.Path != "" {
+		parts := strings.Split(info.Main.Path, "/")
+		if AppProject == "Unknown" {
+			AppProject = path.Base(info.Main.Path)
+		}
+		// 从 <domain>/<user>/<repo> 格式中提取开发者
+		if Developer == "Unknown" && len(parts) >= 2 {
+			Developer = "http://" + parts[0] + "/" + parts[1] // 第二部分是用户名/组织名
+		}
 	}
 
 	// 从模块版本提取应用版本
