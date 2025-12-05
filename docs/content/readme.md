@@ -21,10 +21,10 @@ go install github.com/lwmacct/251203-mc-metrics/cmd/mc-vmimport@latest
 - 使用 `--config <path>` 指定配置文件路径
   > 默认配置文件路径（按顺序搜索）：
   >
-  > 1. `./config.yaml`
-  > 2. `./config/config.yaml`
-  > 3. `$HOME/.mc-metrics.yaml`
-  > 4. `/etc/mc-metrics/config.yaml`
+  > - `./config.yaml`
+  > - `./config/config.yaml`
+  > - `$HOME/.mc-metrics.yaml`
+  > - `/etc/mc-metrics/config.yaml`
 
 ### 命令示例
 
@@ -84,7 +84,6 @@ mc-metrics query -o graph --range 1h 'rate(http_requests_total[5m])'
 
 ## 相关链接
 
-- [设计文档](./guide/design)
 - [VictoriaMetrics 文档](https://docs.victoriametrics.com/)
 - [MetricsQL 文档](https://docs.victoriametrics.com/victoriametrics/metricsql/)
 
