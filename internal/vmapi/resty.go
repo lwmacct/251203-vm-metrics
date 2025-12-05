@@ -31,7 +31,8 @@ func NewClient(cfg *ClientConfig) (Client, error) {
 	client := resty.New().
 		SetBaseURL(baseURL).
 		SetTimeout(cfg.Timeout).
-		SetHeader("Accept", "application/json")
+		SetHeader("Accept", "application/json").
+		SetDisableWarn(true)
 
 	// 配置认证
 	switch cfg.AuthType {
