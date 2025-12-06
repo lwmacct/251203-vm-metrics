@@ -5,17 +5,17 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/lwmacct/251203-mc-metrics/internal/command"
-	"github.com/lwmacct/251203-mc-metrics/internal/command/export"
-	importcmd "github.com/lwmacct/251203-mc-metrics/internal/command/import"
-	"github.com/lwmacct/251203-mc-metrics/internal/command/query"
-	"github.com/lwmacct/251203-mc-metrics/internal/version"
+	"github.com/lwmacct/251203-vm-metrics/internal/command"
+	"github.com/lwmacct/251203-vm-metrics/internal/command/export"
+	importcmd "github.com/lwmacct/251203-vm-metrics/internal/command/import"
+	"github.com/lwmacct/251203-vm-metrics/internal/command/query"
+	"github.com/lwmacct/251203-vm-metrics/internal/version"
 	"github.com/urfave/cli/v3"
 )
 
 func main() {
 	app := &cli.Command{
-		Name:    "mc-metrics",
+		Name:    "vm-metrics",
 		Usage:   "VictoriaMetrics 统一命令行工具",
 		Version: version.GetVersion(),
 		Commands: []*cli.Command{

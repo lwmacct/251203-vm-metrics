@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	app "github.com/lwmacct/251203-mc-metrics/internal/command/import"
+	app "github.com/lwmacct/251203-vm-metrics/internal/command/export"
 )
 
 func main() {

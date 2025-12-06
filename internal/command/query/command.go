@@ -4,8 +4,8 @@ package query
 import (
 	"time"
 
-	"github.com/lwmacct/251203-mc-metrics/internal/command"
-	"github.com/lwmacct/251203-mc-metrics/internal/version"
+	"github.com/lwmacct/251203-vm-metrics/internal/command"
+	"github.com/lwmacct/251203-vm-metrics/internal/version"
 	"github.com/urfave/cli/v3"
 )
 

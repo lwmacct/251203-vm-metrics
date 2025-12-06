@@ -6,7 +6,7 @@ import (
 	"io"
 	"os"
 
-	"github.com/lwmacct/251203-mc-metrics/internal/vmapi"
+	"github.com/lwmacct/251203-vm-metrics/internal/vmapi"
 )
 
 // Writer 输出格式化接口

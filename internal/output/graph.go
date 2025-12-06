@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/guptarohit/asciigraph"
-	"github.com/lwmacct/251203-mc-metrics/internal/vmapi"
+	"github.com/lwmacct/251203-vm-metrics/internal/vmapi"
 )
 
 // graphWriter ASCII 图表输出

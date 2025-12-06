@@ -7,8 +7,8 @@ import (
 	"io"
 	"os"
 
-	"github.com/lwmacct/251203-mc-metrics/internal/command"
-	"github.com/lwmacct/251203-mc-metrics/internal/vmapi"
+	"github.com/lwmacct/251203-vm-metrics/internal/command"
+	"github.com/lwmacct/251203-vm-metrics/internal/vmapi"
 	"github.com/urfave/cli/v3"
 )
 

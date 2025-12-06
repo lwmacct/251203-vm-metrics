@@ -6,9 +6,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/lwmacct/251203-mc-metrics/internal/config"
-	"github.com/lwmacct/251203-mc-metrics/internal/version"
-	"github.com/lwmacct/251203-mc-metrics/internal/vmapi"
+	"github.com/lwmacct/251203-vm-metrics/internal/config"
+	"github.com/lwmacct/251203-vm-metrics/internal/version"
+	"github.com/lwmacct/251203-vm-metrics/internal/vmapi"
 	"github.com/urfave/cli/v3"
 )
 

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/lwmacct/251203-mc-metrics/internal/vmapi"
+	"github.com/lwmacct/251203-vm-metrics/internal/vmapi"
 )
 
 // csvWriter CSV 格式输出

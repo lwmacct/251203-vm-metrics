@@ -1,16 +1,16 @@
-# mc-metrics
+# vm-metrics
 
 VictoriaMetrics 命令行工具集，支持 MetricsQL 查询、数据导入导出。
 
 ## 安装
 
 ```bash
-go install github.com/lwmacct/251203-mc-metrics/cmd/mc-metrics@latest
+go install github.com/lwmacct/251203-vm-metrics/cmd/vm-metrics@latest
 
 # 或单独安装
-go install github.com/lwmacct/251203-mc-metrics/cmd/mc-vmquery@latest
-go install github.com/lwmacct/251203-mc-metrics/cmd/mc-vmexport@latest
-go install github.com/lwmacct/251203-mc-metrics/cmd/mc-vmimport@latest
+go install github.com/lwmacct/251203-vm-metrics/cmd/mc-vmquery@latest
+go install github.com/lwmacct/251203-vm-metrics/cmd/mc-vmexport@latest
+go install github.com/lwmacct/251203-vm-metrics/cmd/mc-vmimport@latest
 ```
 
 ## 快速开始
@@ -23,21 +23,21 @@ go install github.com/lwmacct/251203-mc-metrics/cmd/mc-vmimport@latest
   >
   > - `./config.yaml`
   > - `./config/config.yaml`
-  > - `$HOME/.mc-metrics.yaml`
-  > - `/etc/mc-metrics/config.yaml`
+  > - `$HOME/.vm-metrics.yaml`
+  > - `/etc/vm-metrics/config.yaml`
 
 ### 命令示例
 
 ```bash
 # 统一命令
-mc-metrics query 'up{job="prometheus"}'
-mc-metrics export '{job="node"}' -o data.json
-mc-metrics import data.json
+vm-metrics query 'up{job="prometheus"}'
+vm-metrics export '{job="node"}' -o data.json
+vm-metrics import data.json
 
 # 使用别名
-mc-metrics q -o json 'up'           # query
-mc-metrics e '{job="node"}'         # export
-mc-metrics i data.json              # import
+vm-metrics q -o json 'up'           # query
+vm-metrics e '{job="node"}'         # export
+vm-metrics i data.json              # import
 
 # 独立命令 (等效)
 mc-vmquery 'up{job="prometheus"}'
@@ -48,7 +48,7 @@ mc-vmimport data.json
 ## 命令结构
 
 ```
-mc-metrics                      # 统一入口
+vm-metrics                      # 统一入口
 ├── query (q)                   # MetricsQL 查询
 │   ├── metrics                 # 列出所有指标
 │   ├── labels                  # 列出所有标签
@@ -70,16 +70,16 @@ mc-metrics                      # 统一入口
 
 ```bash
 # 表格 (默认)
-mc-metrics query 'up'
+vm-metrics query 'up'
 
 # JSON
-mc-metrics query -o json 'up'
+vm-metrics query -o json 'up'
 
 # CSV
-mc-metrics query -o csv 'up'
+vm-metrics query -o csv 'up'
 
 # ASCII 图表 (仅 range query)
-mc-metrics query -o graph --range 1h 'rate(http_requests_total[5m])'
+vm-metrics query -o graph --range 1h 'rate(http_requests_total[5m])'
 ```
 
 ## 相关链接

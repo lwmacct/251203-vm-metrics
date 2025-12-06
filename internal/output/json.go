@@ -3,7 +3,7 @@ package output
 import (
 	"encoding/json"
 
-	"github.com/lwmacct/251203-mc-metrics/internal/vmapi"
+	"github.com/lwmacct/251203-vm-metrics/internal/vmapi"
 )
 
 // jsonWriter JSON 格式输出

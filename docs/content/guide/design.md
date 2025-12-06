@@ -1,4 +1,4 @@
-# mc-metrics 工具集设计方案
+# vm-metrics 工具集设计方案
 
 <!--TOC-->
 
@@ -50,7 +50,7 @@
 
 | 命令          | 说明                 | 主要用途                  |
 | ------------- | -------------------- | ------------------------- |
-| `mc-metrics`  | 统一命令行工具       | 整合 query/export/import  |
+| `vm-metrics`  | 统一命令行工具       | 整合 query/export/import  |
 | `mc-vmquery`  | MetricsQL 查询客户端 | 即时/范围查询、元数据查询 |
 | `mc-vmexport` | 数据导出工具         | 导出时序数据到文件/管道   |
 | `mc-vmimport` | 数据导入工具         | 从文件/管道导入时序数据   |
@@ -92,28 +92,28 @@
 
 > 详见 `internal/config/config.go`
 
-| 配置项              | 类型     | 说明                            |
-| ------------------- | -------- | ------------------------------- |
-| `server.url`        | string   | VictoriaMetrics 地址            |
-| `server.path_prefix`| string   | API 路径前缀 (如 /victoria)     |
-| `server.timeout`    | Duration | 查询超时                        |
-| `auth.type`         | string   | 认证类型 (basic/bearer)         |
-| `auth.user`         | string   | Basic 用户名                    |
-| `auth.password`     | string   | Basic 密码                      |
-| `auth.token`        | string   | Bearer Token                    |
-| `tls.ca`            | string   | CA 证书路径                     |
-| `tls.cert`          | string   | 客户端证书                      |
-| `tls.key`           | string   | 客户端密钥                      |
-| `tls.skip_verify`   | bool     | 跳过证书验证                    |
-| `output.format`     | string   | 输出格式 (table/json/csv/graph) |
-| `output.no_headers` | bool     | 禁用表头                        |
+| 配置项               | 类型     | 说明                            |
+| -------------------- | -------- | ------------------------------- |
+| `server.url`         | string   | VictoriaMetrics 地址            |
+| `server.path_prefix` | string   | API 路径前缀 (如 /victoria)     |
+| `server.timeout`     | Duration | 查询超时                        |
+| `auth.type`          | string   | 认证类型 (basic/bearer)         |
+| `auth.user`          | string   | Basic 用户名                    |
+| `auth.password`      | string   | Basic 密码                      |
+| `auth.token`         | string   | Bearer Token                    |
+| `tls.ca`             | string   | CA 证书路径                     |
+| `tls.cert`           | string   | 客户端证书                      |
+| `tls.key`            | string   | 客户端密钥                      |
+| `tls.skip_verify`    | bool     | 跳过证书验证                    |
+| `output.format`      | string   | 输出格式 (table/json/csv/graph) |
+| `output.no_headers`  | bool     | 禁用表头                        |
 
 ### 配置文件示例 (YAML)
 
 ```yaml
 server:
   url: http://localhost:8428
-  path_prefix: ""           # 可选，API 路径前缀
+  path_prefix: "" # 可选，API 路径前缀
   timeout: 30s
 
 auth:
@@ -138,10 +138,10 @@ output:
 | `MC_VMQUERY_SERVER_URL`         | `server.url`         |
 | `MC_VMQUERY_SERVER_PATH_PREFIX` | `server.path_prefix` |
 | `MC_VMQUERY_SERVER_TIMEOUT`     | `server.timeout`     |
-| `MC_VMQUERY_AUTH_TYPE`       | `auth.type`       |
-| `MC_VMQUERY_AUTH_TOKEN`      | `auth.token`      |
-| `MC_VMQUERY_TLS_SKIP_VERIFY` | `tls.skip_verify` |
-| `MC_VMQUERY_OUTPUT_FORMAT`   | `output.format`   |
+| `MC_VMQUERY_AUTH_TYPE`          | `auth.type`          |
+| `MC_VMQUERY_AUTH_TOKEN`         | `auth.token`         |
+| `MC_VMQUERY_TLS_SKIP_VERIFY`    | `tls.skip_verify`    |
+| `MC_VMQUERY_OUTPUT_FORMAT`      | `output.format`      |
 
 ### CLI 参数映射
 
@@ -152,10 +152,10 @@ koanf 标签使用 `snake_case`，CLI 使用 `kebab-case`，自动转换：
 | `server.url`         | `--server-url`         |
 | `server.path_prefix` | `--server-path-prefix` |
 | `server.timeout`     | `--server-timeout`     |
-| `auth.type`       | `--auth-type`       |
-| `auth.token`      | `--auth-token`      |
-| `tls.skip_verify` | `--tls-skip-verify` |
-| `output.format`   | `--output-format`   |
+| `auth.type`          | `--auth-type`          |
+| `auth.token`         | `--auth-token`         |
+| `tls.skip_verify`    | `--tls-skip-verify`    |
+| `output.format`      | `--output-format`      |
 
 ## 命令设计
 
@@ -284,7 +284,7 @@ mc-vmquery 'up'
 
 ```
 cmd/
-├── mc-metrics/main.go              # 统一命令入口
+├── vm-metrics/main.go              # 统一命令入口
 ├── mc-vmquery/main.go              # 查询工具入口
 ├── mc-vmexport/main.go             # 导出工具入口
 └── mc-vmimport/main.go             # 导入工具入口
@@ -339,8 +339,8 @@ internal/
 
 > 详见 `internal/output/writer.go`
 
-| 方法               | 说明                     |
-| ------------------ | ------------------------ |
+| 方法               | 说明                                |
+| ------------------ | ----------------------------------- |
 | `WriteQueryResult` | 输出查询结果 (vector/matrix/scalar) |
 | `WriteStrings`     | 输出字符串列表 (labels/metrics)     |
 | `WriteSeries`      | 输出时间序列列表                    |
@@ -469,7 +469,7 @@ Pushgateway 兼容端点，自动添加 job/instance 标签。
 
 ### Phase 5: 统一命令 ✅
 
-- [x] `mc-metrics` 统一入口
+- [x] `vm-metrics` 统一入口
 - [x] 子命令别名 (q/e/i)
 - [x] 代码重构 (command.go + action.go)
 

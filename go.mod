@@ -1,4 +1,4 @@
-module github.com/lwmacct/251203-mc-metrics
+module github.com/lwmacct/251203-vm-metrics
 
 go 1.25.4
 
