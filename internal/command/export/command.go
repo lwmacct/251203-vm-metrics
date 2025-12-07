@@ -3,7 +3,7 @@ package export
 
 import (
 	"github.com/lwmacct/251203-vm-metrics/internal/command"
-	"github.com/lwmacct/251207-go-mod-version/pkg/version"
+	"github.com/lwmacct/251207-go-pkg-version/pkg/version"
 	"github.com/urfave/cli/v3"
 )
 
